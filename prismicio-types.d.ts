@@ -36,13 +36,13 @@ interface SettingsDocumentData {
   /**
    * Site Title field in *Settings*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
    * - **API ID Path**: settings.site_title
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  site_title: prismic.RichTextField;
+  site_title: prismic.KeyTextField;
 
   /**
    * Meta Description field in *Settings*
