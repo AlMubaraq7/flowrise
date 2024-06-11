@@ -18,7 +18,7 @@ const Footer = async () => {
           <sup>©</sup>
           {new Date().getFullYear()}
         </p>
-        <ul className="flex">
+        <ul className="flex">x1
           {settings.data.navigation.map(({ link, label }) => (
             <li key={label}>
               <PrismicNextLink field={link} className="p-3">
