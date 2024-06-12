@@ -21,7 +21,7 @@ const components: JSXMapSerializer = {
     </Heading>
   ),
   paragraph: ({ children }) => (
-    <p className="max-w-md text-lg font-bold text-slate-600">{children}</p>
+    <p className="font-body text-slate-600 mb-8">{children}</p>
   ),
 };
 /**
@@ -33,7 +33,7 @@ const TextWithImage = ({ slice }: TextWithImageProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      <div className="grid gap-8 md:grid-cols-2 place-items-center">
+      <div className="grid gap-8 md:gap-24 md:grid-cols-2 place-items-center md:max-w-4xl mx-auto">
         <PrismicNextImage
           field={slice.primary.image}
           className={clsx(
@@ -41,7 +41,7 @@ const TextWithImage = ({ slice }: TextWithImageProps): JSX.Element => {
             slice.variation === "imageRight" && "md:order-2"
           )}
         />
-        <div className="grid gap-4">
+        <div className="grid gap-4 place-items-center">
           <PrismicRichText
             field={slice.primary.heading}
             components={components}
