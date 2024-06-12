@@ -14,7 +14,7 @@ const Footer = async () => {
         <Link href="/">
           <Logo />
         </Link>
-        <p className="text-xs ">
+        <p className="text-xs font-body ">
           <sup>©</sup>
           {new Date().getFullYear()}
         </p>

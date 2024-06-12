@@ -11,7 +11,7 @@ const Header = async () => {
     <Bounded as="header" classname="font-heading py-4 md:py-6 lg:py-8">
       <div className="flex gap-4 justify-between items-center sm:flex-row flex-col">
         <Link href="/">
-        <Logo/>
+          <Logo />
         </Link>
         <nav>
           <ul className="flex">
