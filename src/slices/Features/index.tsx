@@ -1,3 +1,4 @@
+"use client";
 import { Content } from "@prismicio/client";
 import {
   JSXMapSerializer,
@@ -6,7 +7,10 @@ import {
 } from "@prismicio/react";
 import Bounded from "@/components/Bounded";
 import Heading from "@/components/Heading";
-import { Children } from "react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import ScrollTrigger from "gsap/src/ScrollTrigger";
+import gsap from "gsap";
 
 /**
  * Props for `Features`.
@@ -43,25 +47,62 @@ const icons = {
  * Component for "Features" Slices.
  */
 const Features = ({ slice }: FeaturesProps): JSX.Element => {
+  const features = useRef<(HTMLDivElement | null)[]>([]);
+  const heading = useRef(null);
+  const box = useRef(null);
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(heading.current, {
+      scrollTrigger: {
+        trigger: box.current,
+        start: "-45%",
+        end: "50%",
+      },
+      scale: 0,
+      y: 100,
+      ease: "back.inOut",
+    });
+    features.current.forEach((item, index) => {
+      gsap.from(item, {
+        scrollTrigger: {
+          trigger: box.current,
+          start: "-20%",
+          end: "50%",
+        },
+        opacity: 0,
+        x: -100,
+        delay: 0.4 * index,
+        ease: "back.inOut",
+      });
+    });
+  });
   return (
     <Bounded
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
     >
-      <PrismicRichText field={slice.primary.heading} components={components} />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 max-w-5xl gap-x-8 gap-y-12 mx-auto sm:place-items-start place-items-center">
-        {slice.primary.feature_box.map(
-          ({ icon, title, description }, index) => (
-            <div
-              key={index}
-              className="max-w-sm grid sm:place-items-start place-items-center"
-            >
-              {icon && <div className="mb-5">{icons[icon]}</div>}
-              <PrismicRichText field={title} components={components} />
-              <PrismicRichText field={description} components={components} />
-            </div>
-          )
-        )}
+      <div ref={box} className="grid grid-cols-1 gap-16">
+        <div ref={heading}>
+          <PrismicRichText
+            field={slice.primary.heading}
+            components={components}
+          />
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 max-w-5xl gap-x-8 gap-y-12 mx-auto sm:place-items-start place-items-center">
+          {slice.primary.feature_box.map(
+            ({ icon, title, description }, index) => (
+              <div
+                key={index}
+                className="max-w-sm grid sm:place-items-start place-items-center"
+                ref={(el) => (features.current[index] = el)}
+              >
+                {icon && <div className="mb-5">{icons[icon]}</div>}
+                <PrismicRichText field={title} components={components} />
+                <PrismicRichText field={description} components={components} />
+              </div>
+            )
+          )}
+        </div>
       </div>
     </Bounded>
   );
