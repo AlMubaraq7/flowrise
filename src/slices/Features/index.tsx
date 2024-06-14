@@ -47,9 +47,15 @@ const icons = {
  * Component for "Features" Slices.
  */
 const Features = ({ slice }: FeaturesProps): JSX.Element => {
-  const features = useRef<(HTMLDivElement | null)[]>([]);
+  const features = useRef<(HTMLDivElement | null)[]>(new Array());
+  features.current = [];
   const heading = useRef(null);
   const box = useRef(null);
+  const addToRefs = (el: HTMLDivElement) => {
+    if (el && !features.current.includes(el)) {
+      features.current.push(el);
+    }
+  };
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     gsap.from(heading.current, {
@@ -76,6 +82,7 @@ const Features = ({ slice }: FeaturesProps): JSX.Element => {
       });
     });
   });
+
   return (
     <Bounded
       data-slice-type={slice.slice_type}
@@ -94,7 +101,7 @@ const Features = ({ slice }: FeaturesProps): JSX.Element => {
               <div
                 key={index}
                 className="max-w-sm grid sm:place-items-start place-items-center"
-                ref={(el) => (features.current[index] = el)}
+                ref={addToRefs}
               >
                 {icon && <div className="mb-5">{icons[icon]}</div>}
                 <PrismicRichText field={title} components={components} />
